@@ -6,6 +6,9 @@ pluginManagement {
             mavenContent { snapshotsOnly() }
         }
         maven("https://repo.papermc.io/repository/maven-public/")
+        maven("https://repo.spongepowered.org/repository/maven-public/") {
+            mavenContent { includeGroup("org.spongepowered") }
+        }
         maven("https://maven.fabricmc.net/")
         maven("https://maven.neoforged.net/releases/")
         maven("https://maven.architectury.dev/")
@@ -18,6 +21,7 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
     id("xyz.jpenilla.quiet-fabric-loom-repositories") version "1.17-SNAPSHOT"
     id("net.neoforged.moddev.repositories") version "2.0.142"
+    id("org.spongepowered.gradle.vanilla") version "0.2.1-SNAPSHOT"
 }
 
 dependencyResolutionManagement {
@@ -30,6 +34,9 @@ dependencyResolutionManagement {
         maven("https://repo.papermc.io/repository/maven-public/")
         maven("https://maven.fabricmc.net/")
         maven("https://maven.neoforged.net/releases/")
+        maven("https://repo.spongepowered.org/repository/maven-public/") {
+            mavenContent { includeGroup("org.spongepowered") }
+        }
     }
 
     versionCatalogs {
