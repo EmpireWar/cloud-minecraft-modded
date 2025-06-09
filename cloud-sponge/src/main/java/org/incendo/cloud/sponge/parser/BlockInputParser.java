@@ -46,6 +46,7 @@ import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.command.registrar.tree.CommandTreeNode;
 import org.spongepowered.api.command.registrar.tree.CommandTreeNodeTypes;
 import org.spongepowered.api.data.persistence.DataContainer;
+import org.spongepowered.api.registry.RegistryHolder;
 import org.spongepowered.api.world.BlockChangeFlag;
 import org.spongepowered.api.world.BlockChangeFlags;
 import org.spongepowered.api.world.server.ServerLocation;
@@ -101,8 +102,8 @@ public final class BlockInputParser<C> implements NodeSource, ArgumentParser.Fut
     }
 
     @Override
-    public CommandTreeNode.@NonNull Argument<? extends CommandTreeNode.Argument<?>> node() {
-        return CommandTreeNodeTypes.BLOCK_STATE.get().createNode();
+    public CommandTreeNode.@NonNull Argument<? extends CommandTreeNode.Argument<?>> node(final RegistryHolder registryHolder) {
+        return CommandTreeNodeTypes.BLOCK_STATE.get(registryHolder).createNode();
     }
 
     private static final class BlockInputImpl implements BlockInput {

@@ -21,6 +21,22 @@ indra {
     }
 }
 
+publishing {
+    repositories {
+        maven {
+            name = "convallyria"
+            url = uri("https://repo.convallyria.com/snapshots")
+            credentials(PasswordCredentials::class)
+        }
+
+        maven {
+            name = "empirewar"
+            url = uri("https://repo.empirewar.org/snapshots")
+            credentials(PasswordCredentials::class)
+        }
+    }
+}
+
 javadocLinks {
     override(libs.fabricLoader, "https://maven.fabricmc.net/docs/fabric-loader-{version}")
     excludes.add("net.fabricmc.fabric-api:")

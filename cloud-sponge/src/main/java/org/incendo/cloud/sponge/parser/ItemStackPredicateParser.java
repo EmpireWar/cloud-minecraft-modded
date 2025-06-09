@@ -41,6 +41,7 @@ import org.incendo.cloud.suggestion.SuggestionProvider;
 import org.spongepowered.api.command.registrar.tree.CommandTreeNode;
 import org.spongepowered.api.command.registrar.tree.CommandTreeNodeTypes;
 import org.spongepowered.api.item.inventory.ItemStack;
+import org.spongepowered.api.registry.RegistryHolder;
 
 /**
  * An argument for parsing {@link ItemStackPredicate ItemStackPredicates}.
@@ -82,8 +83,8 @@ public final class ItemStackPredicateParser<C> implements ArgumentParser.FutureA
     }
 
     @Override
-    public CommandTreeNode.@NonNull Argument<? extends CommandTreeNode.Argument<?>> node() {
-        return CommandTreeNodeTypes.ITEM_PREDICATE.get().createNode();
+    public CommandTreeNode.@NonNull Argument<? extends CommandTreeNode.Argument<?>> node(final RegistryHolder registryHolder) {
+        return CommandTreeNodeTypes.ITEM_PREDICATE.get(registryHolder).createNode();
     }
 
     private record ItemStackPredicateImpl(Predicate<net.minecraft.world.item.ItemStack> predicate) implements ItemStackPredicate {

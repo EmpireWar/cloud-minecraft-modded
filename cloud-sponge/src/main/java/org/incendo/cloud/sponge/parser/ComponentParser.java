@@ -39,6 +39,7 @@ import org.incendo.cloud.suggestion.Suggestion;
 import org.incendo.cloud.suggestion.SuggestionProvider;
 import org.spongepowered.api.command.registrar.tree.CommandTreeNode;
 import org.spongepowered.api.command.registrar.tree.CommandTreeNodeTypes;
+import org.spongepowered.api.registry.RegistryHolder;
 import org.spongepowered.common.adventure.SpongeAdventure;
 
 /**
@@ -81,8 +82,8 @@ public final class ComponentParser<C> implements ArgumentParser.FutureArgumentPa
     }
 
     @Override
-    public CommandTreeNode.@NonNull Argument<? extends CommandTreeNode.Argument<?>> node() {
-        return CommandTreeNodeTypes.COMPONENT.get().createNode();
+    public CommandTreeNode.@NonNull Argument<? extends CommandTreeNode.Argument<?>> node(final RegistryHolder registryHolder) {
+        return CommandTreeNodeTypes.COMPONENT.get(registryHolder).createNode();
     }
 
 }

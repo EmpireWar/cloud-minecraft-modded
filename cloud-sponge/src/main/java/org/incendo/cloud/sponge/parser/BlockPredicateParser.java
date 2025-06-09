@@ -42,6 +42,7 @@ import org.incendo.cloud.suggestion.Suggestion;
 import org.incendo.cloud.suggestion.SuggestionProvider;
 import org.spongepowered.api.command.registrar.tree.CommandTreeNode;
 import org.spongepowered.api.command.registrar.tree.CommandTreeNodeTypes;
+import org.spongepowered.api.registry.RegistryHolder;
 import org.spongepowered.api.world.server.ServerLocation;
 import org.spongepowered.common.util.VecHelper;
 
@@ -85,8 +86,8 @@ public final class BlockPredicateParser<C> implements ArgumentParser.FutureArgum
     }
 
     @Override
-    public CommandTreeNode.@NonNull Argument<? extends CommandTreeNode.Argument<?>> node() {
-        return CommandTreeNodeTypes.BLOCK_PREDICATE.get().createNode();
+    public CommandTreeNode.@NonNull Argument<? extends CommandTreeNode.Argument<?>> node(final RegistryHolder registryHolder) {
+        return CommandTreeNodeTypes.BLOCK_PREDICATE.get(registryHolder).createNode();
     }
 
     private record BlockPredicateImpl(Predicate<BlockInWorld> predicate) implements BlockPredicate {

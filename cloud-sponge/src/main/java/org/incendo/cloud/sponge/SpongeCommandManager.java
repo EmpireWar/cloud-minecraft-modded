@@ -72,6 +72,7 @@ import org.spongepowered.api.command.CommandCause;
 import org.spongepowered.api.event.lifecycle.RegisterCommandEvent;
 import org.spongepowered.api.registry.DefaultedRegistryType;
 import org.spongepowered.api.registry.Registry;
+import org.spongepowered.api.registry.RegistryHolder;
 import org.spongepowered.api.registry.RegistryType;
 import org.spongepowered.api.registry.RegistryTypes;
 import org.spongepowered.math.vector.Vector2d;
@@ -99,6 +100,7 @@ public final class SpongeCommandManager<C> extends CommandManager<C> implements 
      *
      * @param pluginContainer      Owning plugin
      * @param executionCoordinator Execution coordinator instance
+     * @param registryHolder       Registry holder provided by the RegisterCommandEvent
      * @param senderMapper         Function mapping the custom command sender type to a Sponge CommandCause
      */
     @SuppressWarnings("unchecked")
@@ -106,14 +108,15 @@ public final class SpongeCommandManager<C> extends CommandManager<C> implements 
     public SpongeCommandManager(
         final @NonNull PluginContainer pluginContainer,
         final @NonNull ExecutionCoordinator<C> executionCoordinator,
+        final @NonNull RegistryHolder registryHolder,
         final @NonNull SenderMapper<CommandCause, C> senderMapper
-    ) {
+        ) {
         super(executionCoordinator, new SpongeRegistrationHandler<C>());
         this.checkLateCreation();
         this.pluginContainer = pluginContainer;
         ((SpongeRegistrationHandler<C>) this.commandRegistrationHandler()).initialize(this);
         this.senderMapper = senderMapper;
-        this.parserMapper = new SpongeParserMapper<>();
+        this.parserMapper = new SpongeParserMapper<>(registryHolder);
         this.registerCommandPreProcessor(new SpongeCommandPreprocessor<>(this));
         this.registerParsers();
         this.captionRegistry().registerProvider(new SpongeDefaultCaptionsProvider<>());

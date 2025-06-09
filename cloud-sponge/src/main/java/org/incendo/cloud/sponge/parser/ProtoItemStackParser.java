@@ -51,6 +51,7 @@ import org.spongepowered.api.data.persistence.DataContainer;
 import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.item.inventory.ItemStackSnapshot;
+import org.spongepowered.api.registry.RegistryHolder;
 import org.spongepowered.common.data.persistence.NBTTranslator;
 
 /**
@@ -100,8 +101,8 @@ public final class ProtoItemStackParser<C> implements NodeSource,
     }
 
     @Override
-    public CommandTreeNode.@NonNull Argument<? extends CommandTreeNode.Argument<?>> node() {
-        return CommandTreeNodeTypes.ITEM_STACK.get().createNode();
+    public CommandTreeNode.@NonNull Argument<? extends CommandTreeNode.Argument<?>> node(final RegistryHolder registryHolder) {
+        return CommandTreeNodeTypes.ITEM_STACK.get(registryHolder).createNode();
     }
 
     private static final class ProtoItemStackImpl implements ProtoItemStack {
@@ -158,7 +159,7 @@ public final class ProtoItemStackParser<C> implements NodeSource,
             final int stackSize,
             final boolean respectMaximumStackSize
         ) throws ComponentMessageRuntimeException {
-            return this.createItemStack(stackSize, respectMaximumStackSize).createSnapshot();
+            return this.createItemStack(stackSize, respectMaximumStackSize).asImmutable();
         }
 
     }
