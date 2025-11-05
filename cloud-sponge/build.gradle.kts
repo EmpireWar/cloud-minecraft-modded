@@ -1,5 +1,3 @@
-import org.spongepowered.gradle.vanilla.repository.MinecraftPlatform
-
 plugins {
     id("conventions.base")
     id("conventions.publishing")
