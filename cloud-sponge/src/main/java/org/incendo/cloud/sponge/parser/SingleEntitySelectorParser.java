@@ -28,6 +28,7 @@ import java.util.concurrent.CompletableFuture;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.selector.EntitySelector;
+import net.minecraft.server.permissions.PermissionSet;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.incendo.cloud.brigadier.parser.WrappedBrigadierParser;
 import org.incendo.cloud.context.CommandContext;
@@ -81,7 +82,8 @@ public final class SingleEntitySelectorParser<C> implements NodeSource,
             final Entity entity;
             try {
                 entity = (Entity) parsed.findSingleEntity(
-                    ((CommandSourceStack) commandContext.get(SpongeCommandContextKeys.COMMAND_CAUSE)).withPermission(2)
+                    ((CommandSourceStack) commandContext.get(SpongeCommandContextKeys.COMMAND_CAUSE))
+                        .withPermission(PermissionSet.ALL_PERMISSIONS)
                 );
             } catch (final CommandSyntaxException ex) {
                 return ArgumentParseResult.failure(ex);

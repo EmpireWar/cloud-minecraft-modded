@@ -26,7 +26,7 @@ package org.incendo.cloud.sponge.parser;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import java.lang.reflect.Field;
 import java.util.Arrays;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.incendo.cloud.parser.ArgumentParseResult;
@@ -45,7 +45,7 @@ final class ResourceKeyUtil {
     static {
         try {
             // ERROR_INVALID (todo: use accessor)
-            final Field errorInvalidResourceLocationField = Arrays.stream(ResourceLocation.class.getDeclaredFields())
+            final Field errorInvalidResourceLocationField = Arrays.stream(Identifier.class.getDeclaredFields())
                     .filter(it -> it.getType().equals(SimpleCommandExceptionType.class))
                     .findFirst()
                     .orElseThrow(IllegalStateException::new);

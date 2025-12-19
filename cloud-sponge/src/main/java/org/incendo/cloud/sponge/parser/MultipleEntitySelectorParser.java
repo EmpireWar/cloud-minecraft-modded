@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.selector.EntitySelector;
+import net.minecraft.server.permissions.PermissionSet;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.incendo.cloud.brigadier.parser.WrappedBrigadierParser;
 import org.incendo.cloud.context.CommandContext;
@@ -85,7 +86,8 @@ public final class MultipleEntitySelectorParser<C> implements NodeSource,
             final List<Entity> entities;
             try {
                 entities = parsed.findEntities(
-                    ((CommandSourceStack) commandContext.get(SpongeCommandContextKeys.COMMAND_CAUSE)).withPermission(2)
+                    ((CommandSourceStack) commandContext.get(SpongeCommandContextKeys.COMMAND_CAUSE))
+                        .withPermission(PermissionSet.ALL_PERMISSIONS)
                 ).stream().map(e -> (Entity) e).collect(Collectors.toList());
             } catch (final CommandSyntaxException ex) {
                 return ArgumentParseResult.failure(ex);
