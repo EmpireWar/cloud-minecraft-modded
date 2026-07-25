@@ -157,7 +157,7 @@ public final class SpongeCommandManager<C> extends CommandManager<C> implements 
             .registerParser(DataContainerParser.dataContainerParser())
             .registerAnnotationMapper(
                 Center.class,
-                (annotation, type) -> ParserParameters.single(SpongeParserParameters.CENTER_INTEGERS, true)
+                (_, _) -> ParserParameters.single(SpongeParserParameters.CENTER_INTEGERS, true)
             )
             .registerParserSupplier(
                 TypeToken.get(Vector2d.class),
@@ -183,7 +183,7 @@ public final class SpongeCommandManager<C> extends CommandManager<C> implements 
         );
         for (final Field field : RegistryTypes.class.getDeclaredFields()) {
             final Type generic = field.getGenericType(); /* RegistryType<?> */
-            if (!(generic instanceof ParameterizedType)) {
+            if (!(generic instanceof ParameterizedType parameterizedType)) {
                 continue;
             }
 
@@ -193,15 +193,15 @@ public final class SpongeCommandManager<C> extends CommandManager<C> implements 
             } catch (final IllegalAccessException ex) {
                 throw new RuntimeException("Failed to access RegistryTypes." + field.getName(), ex);
             }
-            if (ignoredRegistryTypes.contains(registryType) || !(registryType instanceof DefaultedRegistryType)) {
+
+            if (ignoredRegistryTypes.contains(registryType) || !(registryType instanceof DefaultedRegistryType<?> defaultedRegistryType)) {
                 continue;
             }
-            final DefaultedRegistryType<?> defaultedRegistryType = (DefaultedRegistryType<?>) registryType;
-            final Type valueType = ((ParameterizedType) generic).getActualTypeArguments()[0];
+
+            final Type valueType = parameterizedType.getActualTypeArguments()[0];
 
             this.parserRegistry().registerParserSupplier(
-                TypeToken.get(valueType),
-                params -> new RegistryEntryParser<>(defaultedRegistryType)
+                TypeToken.get(valueType), _ -> new RegistryEntryParser<>(defaultedRegistryType)
             );
         }
     }
